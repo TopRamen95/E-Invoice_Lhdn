@@ -57,16 +57,6 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Charts toggle */}
-      <ChartsPanel stats={stats} />
-
-      {error && (
-        <div className="px-4 py-3 rounded-lg text-xs"
-          style={{ background: '#fff7ed', border: '1px solid #fdba74', color: '#c2410c' }}>
-          ⚠ Backend offline — showing demo data
-        </div>
-      )}
-
       {/* Filter sidebar + table */}
       <div className="flex gap-4 items-start">
         <FilterPanel filters={filters} onChange={updateFilters} />

@@ -54,30 +54,6 @@ export default function InvoicePage() {
         </div>
       </div>
 
-      {/* Status cards */}
-      <div className="grid grid-cols-3 xl:grid-cols-6 gap-3">
-        {CARD_CONFIG.map(c => (
-          <StatusCard
-            key={c.key}
-            label={c.label}
-            value={stats?.[c.statKey as keyof typeof stats] as number}
-            accentColor={c.accentColor}
-            onClick={() => updateFilters({ ...filters, status: STATUS_KEY_MAP[c.key] ?? 'ALL' })}
-            active={filters.status === (STATUS_KEY_MAP[c.key] ?? 'ALL') && c.key !== 'total' && c.key !== 'blank'}
-          />
-        ))}
-      </div>
-
-      {/* Charts toggle */}
-      <ChartsPanel stats={stats} />
-
-      {error && (
-        <div className="px-4 py-2.5 rounded-lg text-xs"
-          style={{ background: '#fff7ed', border: '1px solid #fdba74', color: '#c2410c' }}>
-          ⚠ {error} — showing demo data
-        </div>
-      )}
-
       {/* Filter sidebar + table */}
       <div className="flex gap-4 items-start">
         <FilterPanel filters={filters} onChange={updateFilters} />
