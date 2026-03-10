@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import type { Invoice, InvoiceMode } from '@/types'
-import APARToggle from '@/components/APARToggle'
+import type { Invoice } from '@/types'
 import StatusCard from '@/components/StatusCard'
 import FilterPanel from '@/components/FilterPanel'
 import InvoiceTable from '@/components/InvoiceTable'
@@ -15,12 +14,11 @@ const STATUS_KEY_MAP: Record<string, string> = {
 }
 
 export default function Dashboard() {
-  const [mode, setMode] = useState<InvoiceMode>('AR')
   const [selected, setSelected] = useState<Invoice | null>(null)
   const {
     stats, invoices, total, page, setPage, loading,
     error, filters, updateFilters, useMock, PAGE_SIZE,
-  } = useInvoices(mode)
+  } = useInvoices('ALL')
 
   return (
     <div className="p-5 flex flex-col gap-4 page-enter">
@@ -32,15 +30,9 @@ export default function Dashboard() {
         <div>
           <h1 className="text-base font-bold text-white tracking-wide">LHDN E-Invoice Execution Status</h1>
           <p className="text-xs mt-0.5 text-blue-200">
-            Dashboard · {mode} Invoices
-            {useMock && (
-              <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] bg-yellow-400/20 text-yellow-200 border border-yellow-300/30">
-                Demo Data
-              </span>
-            )}
+            Dashboard · All Invoices
           </p>
         </div>
-        <APARToggle mode={mode} onChange={setMode} />
       </div>
 
       {/* Status cards */}
@@ -56,6 +48,8 @@ export default function Dashboard() {
           />
         ))}
       </div>
+
+
 
       {/* Filter sidebar + table */}
       <div className="flex gap-4 items-start">

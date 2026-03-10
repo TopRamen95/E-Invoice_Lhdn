@@ -8,7 +8,27 @@ const DEFAULT_FILTERS: InvoiceFilters = {
   supplierSearch: '', startDate: '', endDate: '',
 }
 
-export function useInvoices(mode: InvoiceMode) {
+type InvoicesViewMode = InvoiceMode | 'ALL'
+
+function mergeStats(a: InvoiceStats, b: InvoiceStats): InvoiceStats {
+  return {
+    total: a.total + b.total,
+    valid_count: a.valid_count + b.valid_count,
+    invalid_count: a.invalid_count + b.invalid_count,
+    inprogress_count: a.inprogress_count + b.inprogress_count,
+    error_count: a.error_count + b.error_count,
+    blank_count: a.blank_count + b.blank_count,
+    submitted_count: (a.submitted_count ?? 0) + (b.submitted_count ?? 0),
+    processing_count: (a.processing_count ?? 0) + (b.processing_count ?? 0),
+  }
+}
+
+function getMockStats(mode: InvoicesViewMode): InvoiceStats {
+  if (mode === 'ALL') return mergeStats(MOCK_STATS.AR, MOCK_STATS.AP)
+  return MOCK_STATS[mode]
+}
+
+export function useInvoices(mode: InvoicesViewMode) {
   const [stats, setStats] = useState<InvoiceStats | null>(null)
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [total, setTotal] = useState(0)
@@ -26,13 +46,15 @@ export function useInvoices(mode: InvoiceMode) {
       .then(setStats)
       .catch(() => {
         setUseMock(true)
-        setStats(MOCK_STATS[mode])
+        setStats(getMockStats(mode))
       })
   }, [mode])
 
   // Reload invoices when mode OR filters OR page change
   const load = useCallback(() => {
-    const source = MOCK_INVOICES[mode]
+    const source = mode === 'ALL'
+      ? [...MOCK_INVOICES.AR, ...MOCK_INVOICES.AP]
+      : MOCK_INVOICES[mode]
 
     if (useMock) {
       const filtered = source.filter(inv => {
@@ -54,7 +76,7 @@ export function useInvoices(mode: InvoiceMode) {
       .catch(e => {
         setError(e.message)
         setUseMock(true)
-        setStats(MOCK_STATS[mode])
+        setStats(getMockStats(mode))
         const filtered = source.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
         setInvoices(filtered)
         setTotal(source.length)
