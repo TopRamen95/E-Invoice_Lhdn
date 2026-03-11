@@ -26,7 +26,7 @@ export default function FilterPanel({ filters, onChange }: Props) {
   const hasActive = filters.status !== 'ALL' || filters.invoiceSearch || filters.buyerSearch || filters.supplierSearch || filters.startDate || filters.endDate
 
   return (
-    <div className="flex flex-shrink-0">
+    <div className="flex flex-shrink-0 h-full">
       {/* Collapsed toggle button */}
       {!open && (
         <button
@@ -47,7 +47,7 @@ export default function FilterPanel({ filters, onChange }: Props) {
       {/* Open panel */}
       {open && (
         <div
-          className="w-64 rounded-xl border flex flex-col overflow-hidden filter-slide"
+          className="w-64 h-full rounded-xl border flex flex-col overflow-hidden filter-slide"
           style={{ background: '#fff', borderColor: 'var(--border)' }}
         >
           {/* Header */}
@@ -66,7 +66,11 @@ export default function FilterPanel({ filters, onChange }: Props) {
                 </span>
               )}
             </div>
-            <button onClick={() => setOpen(false)} className="w-6 h-6 flex items-center justify-center rounded hover:bg-[#f1f5f9] transition-colors">
+
+            <button
+              onClick={() => setOpen(false)}
+              className="w-6 h-6 flex items-center justify-center rounded hover:bg-[#f1f5f9] transition-colors"
+            >
               <ChevronLeft size={13} style={{ color: 'var(--text3)' }} />
             </button>
           </div>
@@ -81,10 +85,18 @@ export default function FilterPanel({ filters, onChange }: Props) {
                   const c = PILL_COLORS[s]
                   const active = filters.status === s
                   return (
-                    <button key={s} onClick={() => set({ status: s })}
+                    <button
+                      key={s}
+                      onClick={() => set({ status: s })}
                       className="px-2.5 py-1 rounded-full text-[11px] font-semibold border transition-all"
-                      style={{ background: active ? c.activeBg : c.bg, borderColor: active ? c.activeBg : c.border, color: active ? c.active : c.text }}
-                    >{s}</button>
+                      style={{
+                        background: active ? c.activeBg : c.bg,
+                        borderColor: active ? c.activeBg : c.border,
+                        color: active ? c.active : c.text,
+                      }}
+                    >
+                      {s}
+                    </button>
                   )
                 })}
               </div>
@@ -102,14 +114,30 @@ export default function FilterPanel({ filters, onChange }: Props) {
             {/* Dates */}
             <div>
               <Label>Date Range</Label>
+
               <div className="flex flex-col gap-2 mt-1.5">
                 <div>
                   <span className="text-[10px]" style={{ color: 'var(--text3)' }}>Start</span>
-                  <input type="date" value={filters.startDate} onChange={e => set({ startDate: e.target.value })} className="mt-1 w-full" style={inputStyle} />
+
+                  <input
+                    type="date"
+                    value={filters.startDate}
+                    onChange={e => set({ startDate: e.target.value })}
+                    className="mt-1 w-full"
+                    style={inputStyle}
+                  />
                 </div>
+
                 <div>
                   <span className="text-[10px]" style={{ color: 'var(--text3)' }}>End</span>
-                  <input type="date" value={filters.endDate} onChange={e => set({ endDate: e.target.value })} className="mt-1 w-full" style={inputStyle} />
+
+                  <input
+                    type="date"
+                    value={filters.endDate}
+                    onChange={e => set({ endDate: e.target.value })}
+                    className="mt-1 w-full"
+                    style={inputStyle}
+                  />
                 </div>
               </div>
             </div>
@@ -117,11 +145,21 @@ export default function FilterPanel({ filters, onChange }: Props) {
             {/* Clear */}
             {hasActive && (
               <button
-                onClick={() => onChange({ status: 'ALL', invoiceSearch: '', buyerSearch: '', supplierSearch: '', startDate: '', endDate: '' })}
+                onClick={() =>
+                  onChange({
+                    status: 'ALL',
+                    invoiceSearch: '',
+                    buyerSearch: '',
+                    supplierSearch: '',
+                    startDate: '',
+                    endDate: '',
+                  })
+                }
                 className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg text-xs font-semibold border transition-all"
                 style={{ color: '#dc2626', borderColor: '#fca5a5', background: '#fef2f2' }}
               >
-                <X size={11} /> Clear All
+                <X size={11} />
+                Clear All
               </button>
             )}
           </div>
@@ -132,26 +170,59 @@ export default function FilterPanel({ filters, onChange }: Props) {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: '100%', background: 'var(--bg3)', border: '1px solid var(--border2)',
-  borderRadius: 6, padding: '6px 8px', color: 'var(--text)', fontSize: 11,
-  fontFamily: 'inherit', outline: 'none',
+  width: '100%',
+  background: 'var(--bg3)',
+  border: '1px solid var(--border2)',
+  borderRadius: 6,
+  padding: '6px 8px',
+  color: 'var(--text)',
+  fontSize: 11,
+  fontFamily: 'inherit',
+  outline: 'none',
 }
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text3)' }}>{children}</div>
+  return (
+    <div
+      className="text-[10px] font-bold uppercase tracking-widest"
+      style={{ color: 'var(--text3)' }}
+    >
+      {children}
+    </div>
+  )
 }
 
-function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+function Field({
+  label,
+  value,
+  onChange,
+}: {
+  label: string
+  value: string
+  onChange: (v: string) => void
+}) {
   return (
     <div>
       <Label>{label}</Label>
+
       <div className="relative mt-1.5">
-        <Search size={11} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--text3)' }} />
+        <Search
+          size={11}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2"
+          style={{ color: 'var(--text3)' }}
+        />
+
         <input
-          type="text" value={value} onChange={e => onChange(e.target.value)}
+          type="text"
+          value={value}
+          onChange={e => onChange(e.target.value)}
           placeholder="Search…"
           className="w-full pl-7 pr-3 py-1.5 rounded-lg border text-xs outline-none transition-colors"
-          style={{ background: 'var(--bg3)', borderColor: 'var(--border2)', color: 'var(--text)' }}
+          style={{
+            background: 'var(--bg3)',
+            borderColor: 'var(--border2)',
+            color: 'var(--text)',
+          }}
           onFocus={e => (e.target.style.borderColor = 'var(--accent)')}
           onBlur={e => (e.target.style.borderColor = 'var(--border2)')}
         />
