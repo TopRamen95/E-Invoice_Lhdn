@@ -59,3 +59,31 @@ body {
   from { opacity: 0; max-height: 0; }
   to   { opacity: 1; max-height: 600px; }
 }
+
+/* ============================= */
+/* Added Smooth Dashboard UX */
+/* ============================= */
+
+/* Smooth table resize when filter collapses */
+.grid {
+  transition: grid-template-columns 0.25s ease;
+}
+
+/* Smooth filter open/close motion */
+.filter-slide {
+  transition: width 0.25s ease, transform 0.25s ease, opacity 0.2s ease;
+}
+
+/* Collapsed filter icon animation */
+.filter-collapsed {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.filter-collapsed:hover {
+  transform: scale(1.05);
+}
+
+/* Slight table fade when layout changes */
+.table-transition {
+  transition: width 0.25s ease, opacity 0.2s ease;
+}
