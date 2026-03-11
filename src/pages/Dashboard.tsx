@@ -7,33 +7,35 @@ import InvoiceDetailPanel from '@/components/InvoiceDetailPanel'
 import ChartsPanel from '@/components/ChartsPanel'
 import { useInvoices } from '@/hooks/useInvoices'
 import { CARD_CONFIG } from '@/utils'
+import { LayoutDashboard as Dashboard } from 'lucide-react'
 
 const STATUS_KEY_MAP: Record<string, string> = {
   total: 'ALL', valid: 'Valid', invalid: 'Invalid',
   error: 'Error', inprogress: 'InProgress', blank: 'ALL',
 }
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const [selected, setSelected] = useState<Invoice | null>(null)
   const {
     stats, invoices, total, page, setPage, loading,
     error, filters, updateFilters, useMock, PAGE_SIZE,
-  } = useInvoices('ALL')
+  } = useInvoices("ALL")
+
 
   return (
     <div className="p-5 flex flex-col gap-4 page-enter">
       {/* Banner */}
-      <div
-        className="flex items-center justify-between rounded-xl px-6 py-4 border"
-        style={{ background: 'linear-gradient(135deg,#1e3a5f 0%,#1e40af 100%)', borderColor: '#1d4ed8' }}
-      >
-        <div>
-          <h1 className="text-base font-bold text-white tracking-wide">LHDN E-Invoice Execution Status</h1>
-          <p className="text-xs mt-0.5 text-blue-200">
-            Dashboard · All Invoices
-          </p>
+      <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center border"
+              style={{ background: '#eff6ff', borderColor: '#bfdbfe' }}>
+              <Dashboard size={16} style={{ color: '#0284c7' }} />
+            </div>
+          <div>
+            <h1 className="text-sm font-bold" style={{ color: '#0f172a' }}>
+              Dashboard
+            </h1>
+          </div>
         </div>
-      </div>
 
       {/* Status cards */}
       <div className="grid grid-cols-3 xl:grid-cols-6 gap-3">

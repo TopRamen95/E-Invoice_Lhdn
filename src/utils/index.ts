@@ -35,7 +35,7 @@ export const getStatus = (s: InvoiceStatus | string) =>
 
 // Each card: accentColor is one solid color; background/border derived in component
 export const CARD_CONFIG = [
-  { key: 'total',      label: 'Total Invoices',  statKey: 'total',            accentColor: '#2563eb' },
+  { key: 'total',      label: 'Invoices',  statKey: 'total',            accentColor: '#2563eb' },
   { key: 'valid',      label: 'Valid',           statKey: 'valid_count',      accentColor: '#16a34a' },
   { key: 'invalid',    label: 'Invalid',         statKey: 'invalid_count',    accentColor: '#dc2626' },
   { key: 'error',      label: 'Error',           statKey: 'error_count',      accentColor: '#ea580c' },

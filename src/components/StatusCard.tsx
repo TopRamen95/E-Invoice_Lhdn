@@ -11,7 +11,7 @@ export default function StatusCard({ label, value, accentColor, onClick, active 
     <button
       onClick={onClick}
       className={[
-        'rounded-xl p-4 border text-left transition-all duration-150 w-full',
+        'rounded-lg p-3 border text-left transition-all duration-150 w-full',
         onClick ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md' : 'cursor-default',
         active ? 'ring-2 ring-offset-2' : '',
       ].join(' ')}
@@ -23,13 +23,13 @@ export default function StatusCard({ label, value, accentColor, onClick, active 
       }}
     >
       <div
-        className="text-[10px] font-bold uppercase tracking-widest mb-2"
+        className="text-[9px] font-bold uppercase tracking-wider mb-1.5"
         style={{ color: `${accentColor}cc` }}  /* 80% opacity */
       >
         {label}
       </div>
       <div
-        className="text-[28px] font-bold tabular-nums leading-none"
+        className="text-[24px] font-bold tabular-nums leading-none"
         style={{ color: accentColor }}
       >
         {value !== undefined ? value.toLocaleString() : '—'}

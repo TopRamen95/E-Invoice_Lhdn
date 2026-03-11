@@ -36,10 +36,6 @@ export default function InvoicePage() {
             <h1 className="text-sm font-bold" style={{ color: '#0f172a' }}>
               {mode} Invoices
             </h1>
-            <p className="text-xs" style={{ color: '#94a3b8' }}>
-              {total.toLocaleString()} records
-              {useMock && <span className="ml-1.5" style={{ color: '#ea580c' }}>· Demo</span>}
-            </p>
           </div>
         </div>
         <div className="flex items-center gap-3">

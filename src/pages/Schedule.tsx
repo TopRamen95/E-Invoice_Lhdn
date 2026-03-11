@@ -66,7 +66,6 @@ export default function SchedulePage() {
           </div>
           <div>
             <h1 className="text-sm font-bold" style={{ color: '#0f172a' }}>Invoice Schedules</h1>
-            <p className="text-xs" style={{ color: '#94a3b8' }}>{schedules.length} total schedules configured</p>
           </div>
         </div>
         <button
